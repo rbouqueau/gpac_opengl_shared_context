@@ -23,6 +23,7 @@
  *
  */
 
+#define GPAC_STATIC_MODULES
 
 #include "dx_hw.h"
 

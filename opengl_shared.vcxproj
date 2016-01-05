@@ -151,12 +151,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="dx_hw\copy_pixels.c" />
+    <ClCompile Include="dx_hw\dx_2d.c" />
+    <ClCompile Include="dx_hw\dx_audio.c" />
+    <ClCompile Include="dx_hw\dx_video.c" />
+    <ClCompile Include="dx_hw\dx_window.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="opengl_shared_module.c" />
     <ClCompile Include="opt.c" />
     <ClCompile Include="player.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dx_hw\dx_hw.h" />
+    <ClInclude Include="dx_hw\resource.h" />
+    <ClInclude Include="dx_hw_wrapper.h" />
     <ClInclude Include="opengl_shared_module.h" />
     <ClInclude Include="opt.h" />
     <ClInclude Include="player.h" />

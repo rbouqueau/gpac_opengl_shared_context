@@ -52,6 +52,7 @@ static void check_keyboard(GF_Terminal *term)
 Bool player(char *fn)
 {
 	Bool ret = GF_FALSE;
+	GF_Err e;
 	GF_User user;
 	GF_Terminal *term = NULL;
 	GF_Config *cfg_file;

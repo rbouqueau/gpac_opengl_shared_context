@@ -11,56 +11,11 @@
  */
 
 #define GPAC_STATIC_MODULES
+#include "dx_hw_wrapper.h"
 #include "opengl_shared_module.h"
 #include <gpac/list.h>
 #include <gpac/modules/video_out.h>
 
-static GF_Err Setup(struct _video_out *vout, void *os_handle, void *os_display, u32 init_flags)
-{
-	return GF_OK;
-}
-
-static GF_Err Flush(struct _video_out *vout, GF_Window *dest)
-{
-	return GF_OK;
-}
-static void Shutdown(struct _video_out *vout)
-{
-}
-
-static GF_Err SetFullScreen(struct _video_out *vout, Bool fs_on, u32 *new_disp_width, u32 *new_disp_height)
-{
-	return GF_OK;
-}
-
-static GF_Err ProcessEvent(struct _video_out *vout, GF_Event *event)
-{
-	return GF_OK;
-}
-
-static void *NewOpenGLSharedVideoOutput()
-{
-	GF_VideoOutput *driv = (GF_VideoOutput *) gf_malloc(sizeof(GF_VideoOutput));
-	memset(driv, 0, sizeof(GF_VideoOutput));
-	GF_REGISTER_MODULE_INTERFACE(driv, GF_VIDEO_OUTPUT_INTERFACE, OPENGL_SHARED_MODULE_NAME_STR, "gpac distribution");
-
-	driv->Setup = Setup;
-	driv->Flush = Flush;
-	driv->Shutdown = Shutdown;
-	driv->SetFullScreen = SetFullScreen;
-	driv->ProcessEvent = ProcessEvent;
-#if 0 //not implemented yet
-	driv->opaque = pCtx;
-#endif
-
-	return (void *)driv;
-}
-
-static void DeleteVideoOutput(void *ifce)
-{
-	GF_VideoOutput *driv = (GF_VideoOutput *) ifce;
-	gf_free(driv);
-}
 
 /*interface query*/
 GPAC_MODULE_EXPORT
@@ -70,6 +25,7 @@ const u32 *QueryInterfaces()
 		GF_VIDEO_OUTPUT_INTERFACE,
 		0
 	};
+	assert((sizeof(si) == sizeof(u32)*2) && (si[0]==GF_VIDEO_OUTPUT_INTERFACE) && (si[1]==0));
 	return si;
 }
 
@@ -77,30 +33,35 @@ const u32 *QueryInterfaces()
 GPAC_MODULE_EXPORT
 GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
-	if (InterfaceType == GF_VIDEO_OUTPUT_INTERFACE)
-		return (GF_BaseInterface*)NewOpenGLSharedVideoOutput();
-	else
-		return NULL;
+	GF_BaseInterface *ifce = NULL;
+	if (InterfaceType == GF_VIDEO_OUTPUT_INTERFACE) {
+		GF_InterfaceRegister *reg = gf_register_module_dx_out();
+		ifce = reg->LoadInterface(InterfaceType);
+		GF_REGISTER_MODULE_INTERFACE(ifce, GF_VIDEO_OUTPUT_INTERFACE, OPENGL_SHARED_MODULE_NAME_STR, "gpac distribution");
+		gf_free(reg);
+	}
+
+	return ifce;
 }
 
 /*interface destroy*/
 GPAC_MODULE_EXPORT
 void ShutdownInterface(GF_BaseInterface *ifce)
 {
+	GF_InterfaceRegister *reg = gf_register_module_dx_out();
 	switch (ifce->InterfaceType) {
 	case GF_VIDEO_OUTPUT_INTERFACE:
-		DeleteVideoOutput((GF_VideoOutput *)ifce);
+		reg->ShutdownInterface(ifce);
 		break;
 	}
+	gf_free(reg);
 }
 
 GPAC_MODULE_STATIC_DECLARATION( opengl_shared_out )
 
-#define GET_MODULE_REGISTER_FN(__name) gf_register_module_##__name
-
 GF_Err manually_register_opengl_shared_module(GF_ModuleManager *mgr)
 {
-	GF_Err e = gf_module_load_static(mgr, GET_MODULE_REGISTER_FN(opengl_shared_out));
+	GF_Err e = gf_module_load_static(mgr, gf_register_module_opengl_shared_out);
 	gf_modules_refresh(mgr);
 	return e;
 }
