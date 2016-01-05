@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\main.c" />
+    <ClCompile Include="..\player.c" />
+    <ClCompile Include="..\opt.c" />
+    <ClCompile Include="..\opengl_shared_module.c" />
+    <ClCompile Include="..\dx_hw\copy_pixels.c">
+      <Filter>dx_hw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dx_hw\dx_2d.c">
+      <Filter>dx_hw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dx_hw\dx_video.c">
+      <Filter>dx_hw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dx_hw\dx_window.c">
+      <Filter>dx_hw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dx_hw\dx_audio.c">
+      <Filter>dx_hw</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\player.h" />
+    <ClInclude Include="..\opt.h" />
+    <ClInclude Include="..\opengl_shared_module.h" />
+    <ClInclude Include="..\dx_hw_wrapper.h" />
+    <ClInclude Include="..\dx_hw\dx_hw.h">
+      <Filter>dx_hw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dx_hw\resource.h">
+      <Filter>dx_hw</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="dx_hw">
+      <UniqueIdentifier>{01ba30b9-ba3a-41d3-b7e9-dca0109b3a5b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
