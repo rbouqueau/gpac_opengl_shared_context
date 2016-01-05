@@ -12,6 +12,4 @@
 
 #pragma once
 
-#include <gpac/module.h>
-
-GF_InterfaceRegister* gf_register_module_dx_out();
+int create_window();

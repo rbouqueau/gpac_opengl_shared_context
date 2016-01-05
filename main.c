@@ -11,6 +11,7 @@
  */
 
 #include "player.h"
+#include "ogl_wrapper.h"
 #include <stdio.h>
 
 #ifdef WIN32
@@ -40,6 +41,7 @@ int main(int argc, char **argv)
 	fn = (char*)alloca(strlen(argv[1]) + strlen(gpac360) + 1);
 	sprintf(fn, "%s%s", argv[1], gpac360);
 
+	//create_window();
 	if (!player(fn)) {
 		ret = 1;
 		goto exit;

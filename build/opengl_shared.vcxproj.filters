@@ -20,6 +20,12 @@
     <ClCompile Include="..\dx_hw\dx_audio.c">
       <Filter>dx_hw</Filter>
     </ClCompile>
+    <ClCompile Include="..\ogl\gl_window.c">
+      <Filter>ogl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ogl\windows.c">
+      <Filter>ogl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\player.h" />
@@ -32,10 +38,17 @@
     <ClInclude Include="..\dx_hw\resource.h">
       <Filter>dx_hw</Filter>
     </ClInclude>
+    <ClInclude Include="..\ogl\gl_window.h">
+      <Filter>ogl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ogl_wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="dx_hw">
       <UniqueIdentifier>{01ba30b9-ba3a-41d3-b7e9-dca0109b3a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ogl">
+      <UniqueIdentifier>{a224a0c2-6c60-499d-8bbc-519d70113f26}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

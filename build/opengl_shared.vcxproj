@@ -157,6 +157,8 @@
     <ClCompile Include="..\dx_hw\dx_video.c" />
     <ClCompile Include="..\dx_hw\dx_window.c" />
     <ClCompile Include="..\main.c" />
+    <ClCompile Include="..\ogl\gl_window.c" />
+    <ClCompile Include="..\ogl\windows.c" />
     <ClCompile Include="..\opengl_shared_module.c" />
     <ClCompile Include="..\opt.c" />
     <ClCompile Include="..\player.c" />
@@ -165,6 +167,8 @@
     <ClInclude Include="..\dx_hw\dx_hw.h" />
     <ClInclude Include="..\dx_hw\resource.h" />
     <ClInclude Include="..\dx_hw_wrapper.h" />
+    <ClInclude Include="..\ogl\gl_window.h" />
+    <ClInclude Include="..\ogl_wrapper.h" />
     <ClInclude Include="..\opengl_shared_module.h" />
     <ClInclude Include="..\opt.h" />
     <ClInclude Include="..\player.h" />
