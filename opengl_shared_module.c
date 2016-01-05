@@ -20,6 +20,24 @@ static GF_Err Setup(struct _video_out *vout, void *os_handle, void *os_display, 
 	return GF_OK;
 }
 
+static GF_Err Flush(struct _video_out *vout, GF_Window *dest)
+{
+	return GF_OK;
+}
+static void Shutdown(struct _video_out *vout)
+{
+}
+
+static GF_Err SetFullScreen(struct _video_out *vout, Bool fs_on, u32 *new_disp_width, u32 *new_disp_height)
+{
+	return GF_OK;
+}
+
+static GF_Err ProcessEvent(struct _video_out *vout, GF_Event *event)
+{
+	return GF_OK;
+}
+
 static void *NewOpenGLSharedVideoOutput()
 {
 	GF_VideoOutput *driv = (GF_VideoOutput *) gf_malloc(sizeof(GF_VideoOutput));
@@ -27,12 +45,12 @@ static void *NewOpenGLSharedVideoOutput()
 	GF_REGISTER_MODULE_INTERFACE(driv, GF_VIDEO_OUTPUT_INTERFACE, OPENGL_SHARED_MODULE_NAME_STR, "gpac distribution");
 
 	driv->Setup = Setup;
+	driv->Flush = Flush;
+	driv->Shutdown = Shutdown;
+	driv->SetFullScreen = SetFullScreen;
+	driv->ProcessEvent = ProcessEvent;
 #if 0 //not implemented yet
 	driv->opaque = pCtx;
-	driv->Flush = DD_Flush;
-	driv->Shutdown = DD_Shutdown;
-	driv->SetFullScreen = DD_SetFullScreen;
-	driv->ProcessEvent = DD_ProcessEvent;
 #endif
 
 	return (void *)driv;

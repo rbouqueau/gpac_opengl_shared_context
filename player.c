@@ -40,7 +40,7 @@ Bool player(char *fn)
 	GF_User user;
 	GF_Terminal *term = NULL;
 	GF_Config *cfg_file;
-	cfg_file = gf_cfg_init("GPAC.cfg", NULL);
+	cfg_file = gf_cfg_init(NULL, NULL);
 	user.modules = gf_modules_new(NULL, cfg_file);
 	e = manually_register_opengl_shared_module(user.modules);
 	if (e != GF_OK) goto exit;
@@ -54,19 +54,20 @@ Bool player(char *fn)
 	while (!connected) gf_sleep(1);
 	while ( connected) {
 		gf_term_process_step(term);
-
-		switch (gf_prompt_get_char()) {
-		case 'q':
-			{
-				GF_Event evt;
-				memset(&evt, 0, sizeof(GF_Event));
-				evt.type = GF_EVENT_QUIT;
-				gf_term_send_event(term, &evt);
+		if (gf_prompt_has_input()) {
+			switch (gf_prompt_get_char()) {
+			case 'q':
+				{
+					GF_Event evt;
+					memset(&evt, 0, sizeof(GF_Event));
+					evt.type = GF_EVENT_QUIT;
+					gf_term_send_event(term, &evt);
+				}
+				break;
 			}
-			break;
 		}
-		ret = GF_TRUE;
 	}
+	ret = GF_TRUE;
 
 exit:
 	gf_term_disconnect(term);
