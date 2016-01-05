@@ -40,12 +40,14 @@ Bool player(char *fn)
 	GF_User user;
 	GF_Terminal *term = NULL;
 	GF_Config *cfg_file;
+	memset(&user, 0, sizeof(user));
 	cfg_file = gf_cfg_init(NULL, NULL);
 	user.modules = gf_modules_new(NULL, cfg_file);
 	e = manually_register_opengl_shared_module(user.modules);
 	if (e != GF_OK) goto exit;
 	set_cfg_option(cfg_file, "Video:DriverName=" OPENGL_SHARED_MODULE_NAME_STR);
 	user.config = cfg_file;
+	user.opaque = &user;
 	user.EventProc = GPAC_EventProc;
 	term = gf_term_new(&user);
 	if (!term) goto exit;
