@@ -16,7 +16,7 @@
 
 volatile Bool connected = GF_FALSE;
 
-Bool GPAC_EventProc(void *ptr, GF_Event *evt)
+static Bool event_proc(void *ptr, GF_Event *evt)
 {
 	switch (evt->type) {
 	case GF_EVENT_CONNECT:
@@ -33,10 +33,25 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 	return GF_FALSE;
 }
 
+static void check_keyboard(GF_Terminal *term)
+{
+	if (gf_prompt_has_input()) {
+		switch (gf_prompt_get_char()) {
+		case 'q':
+			{
+				GF_Event evt;
+				memset(&evt, 0, sizeof(GF_Event));
+				evt.type = GF_EVENT_QUIT;
+				gf_term_send_event(term, &evt);
+			}
+			break;
+		}
+	}
+}
+
 Bool player(char *fn)
 {
 	Bool ret = GF_FALSE;
-	GF_Err e;
 	GF_User user;
 	GF_Terminal *term = NULL;
 	GF_Config *cfg_file;
@@ -48,7 +63,7 @@ Bool player(char *fn)
 	set_cfg_option(cfg_file, "Video:DriverName=" OPENGL_SHARED_MODULE_NAME_STR);
 	user.config = cfg_file;
 	user.opaque = &user;
-	user.EventProc = GPAC_EventProc;
+	user.EventProc = event_proc;
 	term = gf_term_new(&user);
 	if (!term) goto exit;
 
@@ -56,18 +71,7 @@ Bool player(char *fn)
 	while (!connected) gf_sleep(1);
 	while ( connected) {
 		gf_term_process_step(term);
-		if (gf_prompt_has_input()) {
-			switch (gf_prompt_get_char()) {
-			case 'q':
-				{
-					GF_Event evt;
-					memset(&evt, 0, sizeof(GF_Event));
-					evt.type = GF_EVENT_QUIT;
-					gf_term_send_event(term, &evt);
-				}
-				break;
-			}
-		}
+		check_keyboard(term);
 	}
 	ret = GF_TRUE;
 

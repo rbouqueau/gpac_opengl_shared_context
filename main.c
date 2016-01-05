@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 
 	fn = (char*)alloca(strlen(argv[1]) + strlen(gpac360) + 1);
 	sprintf(fn, "%s%s", argv[1], gpac360);
+
 	if (!player(fn)) {
 		ret = 1;
 		goto exit;
