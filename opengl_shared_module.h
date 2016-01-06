@@ -10,8 +10,6 @@
  *
  */
 
-#pragma once
-
 #include <gpac/module.h>
 
 #define OPENGL_SHARED_MODULE_NAME_STR "OpenGL-Shared Video Output"
