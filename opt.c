@@ -23,19 +23,23 @@ void set_cfg_option(GF_Config *cfg_file, const char *opt_string)
 		fprintf(stderr, "Badly formatted option %s - expected Section:Name=Value\n", opt_string);
 		return;
 	}
-	sep[0] = 0;
-	strcpy(szSec, opt_string);
-	sep[0] = ':';
+	{
+		const size_t sepIdx = sep - opt_string;
+		strncpy(szSec, opt_string, sepIdx);
+		szSec[sepIdx] = 0;
+	}
 	sep ++;
 	sep2 = strchr(sep, '=');
 	if (!sep2) {
 		fprintf(stderr, "Badly formatted option %s - expected Section:Name=Value\n", opt_string);
 		return;
 	}
-	sep2[0] = 0;
-	strcpy(szKey, sep);
-	strcpy(szVal, sep2+1);
-	sep2[0] = '=';
+	{
+		const size_t sepIdx = sep2 - sep;
+		strncpy(szKey, sep, sepIdx);
+		szKey[sepIdx] = 0;
+		strcpy(szVal, sep2+1);
+	}
 	
 	if (!stricmp(szKey, "*")) {
 		if (stricmp(szVal, "null")) {
@@ -47,7 +51,7 @@ void set_cfg_option(GF_Config *cfg_file, const char *opt_string)
 	}
 	
 	if (!stricmp(szVal, "null")) {
-		szVal[0]=0;
+		szVal[0] = 0;
 	}
 	gf_cfg_set_key(cfg_file, szSec, szKey, szVal[0] ? szVal : NULL);
 }
